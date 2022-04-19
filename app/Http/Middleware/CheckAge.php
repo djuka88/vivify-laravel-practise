@@ -21,7 +21,7 @@ class CheckAge
         $age = $request->query('age');
 
         if(!$age || $age<18){
-            return redirect()->route('home');
+            return redirect()->route('index');
         }
 
         return $next($request);

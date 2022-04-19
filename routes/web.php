@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,39 +15,16 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome',[
-        'first_name' => "Milan Djukic"
-    ]);
-})->name('home');
+Route::get('/',[HomeController::class, 'index'])->name('index');
 
-Route::get('sensitivePage', function () {
-    return view('sensitivePage');
-})->middleware('age');
+Route::get('sensitivePage',[HomeController::class, 'sensitive']);//->middleware('age');
 
-// Returning here csrf token needed for POST, PUT, PATCH and DELETE request
-Route::get('token', function(){
-    return csrf_token();
-})->name('token');
+Route::get('token',[HomeController::class,'token'])->name('token');
 
-Route::post('post', function (Request $request) {
-    $param1 =  $request->input('param1');
-    $param2 =  $request->input('param2');
+Route::post('post',[HomeController::class,'store'])->name('store');
 
-    return $param1." ".$param2;
-})->name('post');
+Route::put('put/{id}',[HomeController::class, 'update'])->name('update');
 
-Route::put('put/{id}', function (Request $request,$id) {
-    $param1 = $request->get('param1');
+Route::delete('delete/{id}', [HomeController::class, 'destroy'])->name('destroy');
 
-    return "Updating resource with id = ".$id." with new value: ".$param1;
-})->name('put');
-
-Route::delete('delete/{id}', function($id){
-    return "Deleted resource with id: ".$id;
-})->name('delete');
-
-Route::patch('patch/{id}', function(Request $request,$id){
-    $param1 = $request->get("param1");
-    return "Patching param1 with value: ".$param1;
-})->name('patch');
+Route::patch('patch/{id}',[HomeController::class, 'edit'])->name('edit');
