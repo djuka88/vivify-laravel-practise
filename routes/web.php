@@ -16,10 +16,14 @@ use Illuminate\Http\Request;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
+
+Route::get('sensitivePage', function () {
+    return view('welcome');
+})->middleware('age');
 
 // Returning here csrf token needed for POST, PUT, PATCH and DELETE request
-Route::get('/token', function(){
+Route::get('token', function(){
     return csrf_token();
 })->name('token');
 
