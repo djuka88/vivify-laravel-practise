@@ -20,7 +20,7 @@ class CheckAge
 
         $age = $request->query('age');
 
-        if(!$age && $age<18){
+        if(!$age || $age<18){
             return redirect()->route('home');
         }
 
